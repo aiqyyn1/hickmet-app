@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 export const login = async (data) => {
   try {
-    const response = await api.post('/login',data);
+    const response = await api.post('/login', data);
     const { access_token } = response.data;
     Cookies.set('access', access_token);
     return response.data;
@@ -19,7 +19,7 @@ export const signUp = async (data) => {
 
       data
     );
-    const { access_token} = response.data;
+    const { access_token } = response.data;
     Cookies.set('access', access_token);
     return response.data;
   } catch (error) {
