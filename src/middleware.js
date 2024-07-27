@@ -1,14 +1,29 @@
 import { NextResponse } from 'next/server';
+async function getUserRoleFromSessionToken(sessionToken) {
+  try {
+    const response = await fetch('https://giveme-backend-2.onrender.com/user/me', {
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
+    const data = await response.json();
 
-export function middleware(request) {
+    return data.role;
+  } catch (error) {
+    console.error('Failed to get user role', error);
+    return null;
+  }
+}
+export async function middleware(request) {
   const { pathname } = request.nextUrl;
-  console.log(pathname);
-  if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
+
+  if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
     return NextResponse.next();
   }
 
   const sessionToken = request.cookies.get('access')?.value;
-  console.log('fre', sessionToken);
+  const userRole = await getUserRoleFromSessionToken(sessionToken);
+
   if (!sessionToken) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
