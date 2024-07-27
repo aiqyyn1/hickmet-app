@@ -19,12 +19,12 @@ async function getUserRoleFromSessionToken(sessionToken) {
 }
 export async function middleware(request) {
   // const { pathname } = request.nextUrl;
-  // if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
+  // if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
   //   return NextResponse.next();
   // }
-  // const sessionToken = request.cookies.get('access')?.value;
+  // const sessionToken = request.cookies.get("access")?.value;
   // if (!sessionToken) {
-  //   return NextResponse.redirect(new URL('/login', request.url));
+  //   return NextResponse.redirect(new URL("/login", request.url));
   // }
   // const userRole = await getUserRoleFromSessionToken(sessionToken);
   // if (userRole === 'volunteer') {
