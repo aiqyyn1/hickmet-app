@@ -1,31 +1,18 @@
 'use client';
-import React, { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import React from 'react';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import Card from '../card/card';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 
-const MainVolunteer = () => {
-  const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState('');
+const MainComponent = () => {
+  const [open, setOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
-  const handleOpen = (title) => {
-    setModalContent(title);
+  const handleOpen = (card) => {
+    setSelectedCard(card);
     setOpen(true);
   };
 
@@ -33,46 +20,68 @@ const MainVolunteer = () => {
     setOpen(false);
   };
 
-  // Моковые данные для карточек
+  // Example array of cards
   const cards = [
-    { title: 'Проект 1', description: 'Описание проекта 1' },
-    { title: 'Проект 2', description: 'Описание проекта 2' },
-    { title: 'Проект 3', description: 'Описание проекта 3' },
+    {
+      title: 'Project 1',
+      author: 'Author A',
+      status: 'Active',
+      description: 'Description of project 1',
+    },
+    {
+      title: 'Project 2',
+      author: 'Author B',
+      status: 'Pending',
+      description: 'Description of project 2',
+    },
+    {
+      title: 'Project 3',
+      author: 'Author C',
+      status: 'Completed',
+      description: 'Description of project 3',
+    },
+    {
+      title: 'Project 3',
+      author: 'Author C',
+      status: 'Completed',
+      description: 'Description of project 3',
+    },
+   
+    
   ];
 
   return (
-    <Grid container spacing={2}>
-      {cards.map((card, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index} className='cursor-pointer'>
-          <Card sx={{ maxWidth: 345, mx: 'auto' }}>
-            <CardContent>
-              <Typography variant="h5" component="div" onClick={() => handleOpen(card.title)}>
-                {card.title}
-              </Typography>
-              <Typography variant="body2">{card.description}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
+    <Box >
+      <div className='flex justify-center items-center'>
+      <div container spacing={2} className="mt-10 ml-10  w-4/5 flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-5">
+        {cards.map((card, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
+            <Card title={card.title} author={card.author} status={card.status} />
+          </Grid>
+        ))}
+      </div>
+      </div>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        className='cursor-pointer'
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {modalContent}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Детали проекта: {modalContent}
-          </Typography>
-          <Button variant="contained" className='mt-4'>Take</Button>
+        <Box>
+          {selectedCard && (
+            <>
+              <Typography id="modal-title" variant="h6" component="h2">
+                {selectedCard.title}
+              </Typography>
+              <Typography id="modal-description" sx={{ mt: 2 }}>
+                {selectedCard.description}
+              </Typography>
+            </>
+          )}
         </Box>
       </Modal>
-    </Grid>
+    </Box>
   );
 };
 
-export default MainVolunteer;
+export default MainComponent;

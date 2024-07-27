@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",       // This must be set if "paths" is set
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]     // Maps all imports starting with "@" to the "src" directory
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }

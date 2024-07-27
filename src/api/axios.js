@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  baseURL: 'https://your-api-base-url.com',
+  baseURL: 'https://hikmet-app.onrender.com/',
 });
 
 api.interceptors.request.use(

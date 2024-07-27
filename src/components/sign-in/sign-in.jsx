@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import Link from 'next/link';
+import { login } from '../../utils/auth';
 const SignIn = () => {
   const {
     control,
@@ -10,8 +11,13 @@ const SignIn = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await login(data);
+      console.log(response)
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   return (

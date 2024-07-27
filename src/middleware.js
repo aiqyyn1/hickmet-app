@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 async function getUserRoleFromSessionToken(sessionToken) {
   try {
-    const response = await fetch('https://giveme-backend-2.onrender.com/user/me', {
+    const response = await fetch('https://hikmet-app.onrender.com/', {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
@@ -26,12 +26,12 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // const userRole = await getUserRoleFromSessionToken(sessionToken);
-  // if (userRole === 'volunteer') {
-  //   return NextResponse.redirect(new URL('/volunteer', request.url));
-  // } else {
-  //   return NextResponse.redirect(new URL('/user', request.url));
-  // }
+  const userRole = await getUserRoleFromSessionToken(sessionToken);
+  if (userRole === 'volunteer') {
+    return NextResponse.redirect(new URL('/volunteer', request.url));
+  } else {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 }
 
 export const config = {

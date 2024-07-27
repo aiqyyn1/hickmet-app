@@ -14,7 +14,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import Link from 'next/link';
-
+import { signUp } from '../../utils/auth';
 const SignUp = () => {
   const {
     control,
@@ -24,8 +24,14 @@ const SignUp = () => {
   } = useForm();
   const password = watch('password');
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    
+    try {
+      const response = await signUp(data);
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -45,7 +51,7 @@ const SignUp = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="name"
+          name="firstname"
           control={control}
           defaultValue=""
           rules={{ required: 'Name required' }}
@@ -62,7 +68,7 @@ const SignUp = () => {
           )}
         />
         <Controller
-          name="lastName"
+          name="lastname"
           control={control}
           defaultValue=""
           rules={{ required: 'Last Name required' }}
@@ -155,20 +161,24 @@ const SignUp = () => {
             <FormControl fullWidth margin="normal" error={!!errors.role}>
               <InputLabel>Role</InputLabel>
               <Select {...field} label="Role">
-                <MenuItem value="volunteer">Volunteer</MenuItem>
-                <MenuItem value="pilgrim">Pilgrim</MenuItem>
+                <MenuItem value="VOLUNTEER">Volunteer</MenuItem>
+                <MenuItem value="PILGRIM">Pilgrim</MenuItem>
               </Select>
               <FormHelperText>{errors.role ? errors.role.message : ''}</FormHelperText>
             </FormControl>
           )}
         />
-        <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          style={{ backgroundColor: 'black' }}
+          sx={{ mt: 3, mb: 2 }}
+        >
           Sign Up
         </Button>
       </form>
-      <Link href="/login" className="text-neutral-600">
-        Are you already have an account ?
-      </Link>
+      <Link href="/login">Are you already have an account ?</Link>
     </Container>
   );
 };

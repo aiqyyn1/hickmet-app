@@ -1,22 +1,26 @@
-import api from '@/api/axios';
+import api from '../api/axios';
 import Cookies from 'js-cookie';
 
-export const login = async (email, password) => {
+export const login = async (data) => {
   try {
-    const response = await api.post('/login', { email, password });
-    const { token } = response.data;
-    Cookies.set('token', token);
+    const response = await api.post('/login',data);
+    const { access_token } = response.data;
+    Cookies.set('access', access_token);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : new Error('Network error');
   }
 };
 
-export const signUp = async (name, lastName, email, password, role) => {
+export const signUp = async (data) => {
   try {
-    const response = await api.post('/signup', { name, lastName, email, password, role });
-    const { token } = response.data;
-    Cookies.set('token', token);
+    const response = await api.post(
+      '/register',
+
+      data
+    );
+    const { access_token} = response.data;
+    Cookies.set('access', access_token);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : new Error('Network error');
