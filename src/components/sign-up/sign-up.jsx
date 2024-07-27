@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { signUp } from '../../utils/auth';
+import { useRouter } from 'next/navigation';
 const SignUp = () => {
   const {
     control,
@@ -23,12 +24,11 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const password = watch('password');
-
+  const router = useRouter();
   const onSubmit = async (data) => {
-    
     try {
-      const response = await signUp(data);
-      console.log(response);
+      await signUp(data);
+      router('/login');
     } catch (e) {
       console.log(e);
     }

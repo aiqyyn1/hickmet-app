@@ -4,19 +4,20 @@ import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import Link from 'next/link';
 import { login } from '../../utils/auth';
+import { useRouter } from 'next/navigation';
 const SignIn = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const router = useRouter();
   const onSubmit = async (data) => {
     try {
       const response = await login(data);
-      console.log(response)
+      router.push('/');
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 
@@ -77,7 +78,14 @@ const SignIn = () => {
             />
           )}
         />
-        <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          style={{ backgroundColor: 'black' }}
+          sx={{ mt: 3, mb: 2 }}
+        >
           Sign In
         </Button>
       </form>
