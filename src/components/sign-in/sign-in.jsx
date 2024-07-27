@@ -14,7 +14,7 @@ const SignIn = () => {
   const router = useRouter();
   const onSubmit = async (data) => {
     try {
-      const response = await login(data);
+      await login(data);
       router.push('/');
     } catch (e) {
       console.log(e);

@@ -46,20 +46,22 @@ const MainComponent = () => {
       status: 'Completed',
       description: 'Description of project 3',
     },
-   
-    
   ];
 
   return (
-    <Box >
-      <div className='flex justify-center items-center'>
-      <div container spacing={2} className="mt-10 ml-10  w-4/5 flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-5">
-        {cards.map((card, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
-            <Card title={card.title} author={card.author} status={card.status} />
-          </Grid>
-        ))}
-      </div>
+    <Box>
+      <div className="flex justify-center items-center">
+        <div
+          container
+          spacing={2}
+          className="mt-10 ml-10  w-4/5 flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-5"
+        >
+          {cards.map((card, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
+              <Card title={card.title} author={card.author} status={card.status} />
+            </Grid>
+          ))}
+        </div>
       </div>
       <Modal
         open={open}
