@@ -32,7 +32,13 @@ const SignUp = () => {
     <Container
       component="main"
       maxWidth="xs"
-     sx={{justifyContent:'center', flexDirection:'column', display:'flex', alignItems:'center', height:'100vh'}}
+      sx={{
+        justifyContent: 'center',
+        flexDirection: 'column',
+        display: 'flex',
+        alignItems: 'center',
+        height: '100vh',
+      }}
     >
       <Typography component="h1" variant="h5" className="flex justify-center">
         Sign Up
@@ -160,7 +166,9 @@ const SignUp = () => {
           Sign Up
         </Button>
       </form>
-      <Link href="/login" className='text-neutral-600'>Are you already have an account ?</Link>
+      <Link href="/login" className="text-neutral-600">
+        Are you already have an account ?
+      </Link>
     </Container>
   );
 };

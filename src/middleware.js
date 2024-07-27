@@ -22,13 +22,16 @@ export async function middleware(request) {
   }
 
   const sessionToken = request.cookies.get('access')?.value;
-  const userRole = await getUserRoleFromSessionToken(sessionToken);
-
   if (!sessionToken) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  return NextResponse.next();
+  // const userRole = await getUserRoleFromSessionToken(sessionToken);
+  // if (userRole === 'volunteer') {
+  //   return NextResponse.redirect(new URL('/volunteer', request.url));
+  // } else {
+  //   return NextResponse.redirect(new URL('/user', request.url));
+  // }
 }
 
 export const config = {
