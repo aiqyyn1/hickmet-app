@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import api from '../../api/axios';
+import { useState, useEffect } from "react";
+import api from "../../api/axios";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+
 const foodOptions = [
   { id: 1, name: 'Каша', price: 400 },
   { id: 2, name: 'Яблоко', price: 300 },
@@ -15,6 +18,8 @@ export default function Modal({ showModal, setShowModal }) {
   const [apartment, setApartment] = useState('');
   const [selectedFood, setSelectedFood] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const router = useRouter();
 
   const handleSelectFood = (foodItem) => {
     const newSelection = { ...selectedFood };
@@ -50,12 +55,14 @@ export default function Modal({ showModal, setShowModal }) {
       console.log('Card created', response.data);
       setTitle('');
       setDescription('');
+      setUrgent(true);
       setProblemType('delivery');
       setAddress('');
       setApartment('');
       setSelectedFood({});
       setTotalPrice(0);
       setShowModal(false);
+      router.push("/user-cards");
     } catch (error) {
       console.error(error);
     }
@@ -189,7 +196,7 @@ export default function Modal({ showModal, setShowModal }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 text-white bg-[#434141] rounded-md hover:bg-blue-700"
                 >
                   Создать
                 </button>

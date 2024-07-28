@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
 import Modal from "../create_card_modal/create_card_modal";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function MainPage() {
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   return (
     <div className=" bg-gray-100 flex flex-col items-center">

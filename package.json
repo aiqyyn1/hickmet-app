@@ -14,8 +14,10 @@
     "@mui/icons-material": "^5.16.5",
     "@mui/material": "^5.16.5",
     "axios": "^1.7.2",
-    "js-cookie": "^3.0.5",
+
     "leaflet": "^1.9.4",
+    "jwt-decode": "^4.0.0",
+
     "module-alias": "^2.2.3",
     "next": "14.2.5",
     "react": "^18",

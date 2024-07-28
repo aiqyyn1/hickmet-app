@@ -10,8 +10,8 @@ const Card = memo(({ title, author, status, description }) => {
         </span>
       </div>
       <p className="text-gray-400 text-sm md:text-base">{author}</p>
-      <div className="bg-neutral-600 text-center rounded-lg p-2">{description}</div>
 
+      <div className="bg-neutral-600 text-center rounded-lg p-2">{description}</div>
     </div>
   );
 });

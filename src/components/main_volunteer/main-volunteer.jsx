@@ -2,14 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '../card/card';
-import Map from '../map/Map';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { getCards } from '../../utils/auth';
+import Map from '../map/Map';
 import Link from 'next/link';
-import api from '../../api/axios';
-
 const MainComponent = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -45,12 +43,7 @@ const MainComponent = () => {
         >
           {cards.map((card, index) => (
             <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
-              <Card
-                title={card.title}
-                author={card.author}
-                description={card.description}
-                status={card.status}
-              />
+              <Card title={card.title} author={card.author} description={card.description}></Card>
             </Grid>
           ))}
         </div>
@@ -73,7 +66,7 @@ const MainComponent = () => {
                   <div className="mt-2 px-7 py-3">
                     <p className="text-sm text-gray-500">{selectedCard?.description}</p>
                   </div>
-                  <div className='flex justify-center items-center'>
+                  <div className="flex justify-center items-center">
                     <Map />
                   </div>
                   <div className=" px-4 py-3">
