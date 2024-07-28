@@ -18,6 +18,7 @@ export default function Modal({ showModal, setShowModal }) {
     try {
       const response = api.post("create-card", cardData);
       console.log("Card created", response.data);
+      router.push("/user-cards");
       setTitle("");
       setDescription("");
       setShowModal(false);
@@ -113,6 +114,7 @@ export default function Modal({ showModal, setShowModal }) {
                 <button
                   type="submit"
                   className="px-4 py-2 text-white bg-[#434141] rounded-md hover:bg-blue-700"
+                  onClick={() => router.push("/user-cards")}
                 >
                   Создать
                 </button>

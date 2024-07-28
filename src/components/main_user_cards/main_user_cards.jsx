@@ -2,32 +2,50 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "../card/card";
-
+import UserCardModal from "./card_modal";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { getCards } from "../../utils/auth";
+import { getCardsByUserId } from "../../utils/auth";
+import api from "../../api/axios";
 
-const MainComponent = () => {
-  const [open, setOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
+const UserCards = () => {
+  const [open, setOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
-  const handleOpen = (card) => {
+  const [googleMeetUrl, setGoogleMeetUrl] = useState("");
+
+  const handleOpen = async (card) => {
     setSelectedCard(card);
+    const link = await fetchMeetLink();
+    setGoogleMeetUrl(link);
     setOpen(true);
   };
   useEffect(() => {
-    getCards()
-      .then((res) => setCards(res))
+    getCardsByUserId()
+      .then((res) => {
+        setCards(res);
+      })
       .catch((e) => console.log(e));
   }, []);
+
+  const fetchMeetLink = async () => {
+    try {
+      const response = await api.get("/random-meet");
+      return response.data.meetLink;
+    } catch (error) {
+      console.error("Error fetching meet link:", error);
+      return "";
+    }
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
   return (
     <Box>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center flex-col mt-[40px]">
+        <h1 className="text-3xl font-semibold">Мои карточки</h1>
         <div
           container
           spacing={2}
@@ -51,27 +69,14 @@ const MainComponent = () => {
           ))}
         </div>
       </div>
-      <Modal
+      <UserCardModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box>
-          {selectedCard && (
-            <>
-              <Typography id="modal-title" variant="h6" component="h2">
-                {selectedCard.title}
-              </Typography>
-              <Typography id="modal-description" sx={{ mt: 2 }}>
-                {selectedCard.description}
-              </Typography>
-            </>
-          )}
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        cardInfo={selectedCard}
+        meetLink={googleMeetUrl}
+      />
     </Box>
   );
 };
 
-export default MainComponent;
+export default UserCards;
