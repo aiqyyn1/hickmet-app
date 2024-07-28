@@ -25,11 +25,6 @@ export default function MainPage() {
             <button
               className="mt-6 bg-[#434141] text-white py-2 px-4 rounded-xl lg:w-[530px]"
               onClick={() => {
-                const token = Cookies.get("access");
-                console.log(token);
-                if (!token) {
-                  router.push("/login");
-                }
                 setShowModal(true);
               }}
             >
