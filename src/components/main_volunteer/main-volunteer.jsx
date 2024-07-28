@@ -1,53 +1,31 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '../card/card';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { getCards } from '../../utils/auth';
+
 
 const MainComponent = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-
+  const [cards, setCards] = useState([]);
   const handleOpen = (card) => {
     setSelectedCard(card);
     setOpen(true);
   };
+  useEffect(() => {
+    getCards()
+      .then((res) => setCards(res))
+      .catch((e) => console.log(e));
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  // Example array of cards
-  const cards = [
-    {
-      title: 'Project 1',
-      author: 'Author A',
-      status: 'Active',
-      description: 'Description of project 1',
-    },
-    {
-      title: 'Project 2',
-      author: 'Author B',
-      status: 'Pending',
-      description: 'Description of project 2',
-    },
-    {
-      title: 'Project 3',
-      author: 'Author C',
-      status: 'Completed',
-      description: 'Description of project 3',
-    },
-    {
-      title: 'Project 3',
-      author: 'Author C',
-      status: 'Completed',
-      description: 'Description of project 3',
-    },
-  ];
-
   return (
     <Box>
       <div className="flex justify-center items-center">

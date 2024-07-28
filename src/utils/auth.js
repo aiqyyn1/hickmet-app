@@ -26,3 +26,13 @@ export const signUp = async (data) => {
     throw error.response ? error.response.data : new Error('Network error');
   }
 };
+
+export const getCards = async () => {
+  try {
+    const response = await api.get('/cards')
+    return response.data
+  } catch
+   (e) {
+    console.log(e);
+  }
+};
