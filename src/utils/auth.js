@@ -19,8 +19,7 @@ export const signUp = async (data) => {
 
       data
     );
-   
-    
+
     Cookies.set('access', accessToken);
     return response.data;
   } catch (error) {
