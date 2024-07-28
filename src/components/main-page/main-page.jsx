@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
 import Modal from "../create_card_modal/create_card_modal";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function MainPage() {
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   return (
     <div className=" bg-gray-100 flex flex-col items-center">
@@ -22,8 +25,12 @@ export default function MainPage() {
             <button
               className="mt-6 bg-[#434141] text-white py-2 px-4 rounded-xl lg:w-[530px]"
               onClick={() => {
+                const token = Cookies.get("access");
+                console.log(token);
+                if (!token) {
+                  router.push("/login");
+                }
                 setShowModal(true);
-                console.log();
               }}
             >
               Создать

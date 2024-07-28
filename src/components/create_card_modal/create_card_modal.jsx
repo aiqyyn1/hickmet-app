@@ -1,18 +1,22 @@
 import { useState } from "react";
 import api from "../../api/axios";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export default function Modal({ showModal, setShowModal }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [urgent, setUrgent] = useState(true);
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const cardData = { title, description, urgent };
 
     try {
-      const response = api.post("/create-card", cardData);
+      const response = api.post("create-card", cardData);
       console.log("Card created", response.data);
       setTitle("");
       setDescription("");
