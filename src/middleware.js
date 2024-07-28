@@ -23,17 +23,17 @@ export async function middleware(request) {
   }
 
   const sessionToken = request.cookies.get('access')?.value;
- 
+
   if (!sessionToken) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  const userRole = await getUserRoleFromSessionToken(sessionToken);
-  console.log(userRole)
-  if (userRole === 'VOLUNTEER') {
-    return NextResponse.redirect(new URL('/volunteer', request.url));
-  }
-  return NextResponse.next();
+  // const userRole = await getUserRoleFromSessionToken(sessionToken);
+
+  // if (userRole === 'VOLUNTEER') {
+  //   return NextResponse.redirect(new URL('/volunteer', request.url));
+  // }
+  // return NextResponse.next();
 }
 
 export const config = {

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '../card/card';
-
+import Map from '../map/Map';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { getCards } from '../../utils/auth';
-
+import Link from 'next/link';
+import api from '../../api/axios';
 
 const MainComponent = () => {
   const [open, setOpen] = React.useState(false);
@@ -26,6 +27,14 @@ const MainComponent = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const getChatRoom = async () => {
+    try {
+      const res = await api.post(`/cards/${selectedCard.pilgrimID}/assign/${selectedCard.id}`);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Box>
       <div className="flex justify-center items-center">
@@ -36,7 +45,12 @@ const MainComponent = () => {
         >
           {cards.map((card, index) => (
             <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
-              <Card title={card.title} author={card.author} status={card.status} />
+              <Card
+                title={card.title}
+                author={card.author}
+                description={card.description}
+                status={card.status}
+              />
             </Grid>
           ))}
         </div>
@@ -49,14 +63,35 @@ const MainComponent = () => {
       >
         <Box>
           {selectedCard && (
-            <>
-              <Typography id="modal-title" variant="h6" component="h2">
-                {selectedCard.title}
-              </Typography>
-              <Typography id="modal-description" sx={{ mt: 2 }}>
-                {selectedCard.description}
-              </Typography>
-            </>
+            <div
+              className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+              id="my-modal"
+            >
+              <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div className="mt-3 text-center">
+                  <h2 className="text-lg font-bold">{selectedCard?.title}</h2>
+                  <div className="mt-2 px-7 py-3">
+                    <p className="text-sm text-gray-500">{selectedCard?.description}</p>
+                  </div>
+                  <div className='flex justify-center items-center'>
+                    <Map />
+                  </div>
+                  <div className=" px-4 py-3">
+                    <Link href="/chat" onClick={getChatRoom}>
+                      <button className="px-10 py-2   bg-green-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-700">
+                        Take
+                      </button>
+                    </Link>
+                    <button
+                      onClick={handleClose}
+                      className="px-10 py-2 ml-4  bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-700"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </Box>
       </Modal>

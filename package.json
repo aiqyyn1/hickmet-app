@@ -15,11 +15,13 @@
     "@mui/material": "^5.16.5",
     "axios": "^1.7.2",
     "js-cookie": "^3.0.5",
+    "leaflet": "^1.9.4",
     "module-alias": "^2.2.3",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.52.1"
+    "react-hook-form": "^7.52.1",
+    "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "20.14.12",
