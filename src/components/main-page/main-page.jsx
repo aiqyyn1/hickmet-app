@@ -21,7 +21,9 @@ export default function MainPage() {
             </p>
             <button
               className="mt-6 bg-[#434141] text-white py-2 px-4 rounded-xl lg:w-[530px]"
-              onClick={() => setShowModal(true)}
+              onClick={() => {
+                setShowModal(true);
+              }}
             >
               Создать
             </button>
