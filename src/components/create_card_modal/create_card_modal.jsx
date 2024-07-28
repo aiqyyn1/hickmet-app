@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../../api/axios";
+import Cookies from "js-cookie";
 
 export default function Modal({ showModal, setShowModal }) {
   const [title, setTitle] = useState("");

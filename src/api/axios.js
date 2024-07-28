@@ -6,13 +6,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-<<<<<<< HEAD
-  config => {
-    const token = Cookies.get('access')
-=======
   (config) => {
-    const token = Cookies.get("token");
->>>>>>> d47015976227fe00bbf33f92b3dff491fced37c7
+    const token = Cookies.get("access");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
