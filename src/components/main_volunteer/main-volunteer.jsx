@@ -1,38 +1,74 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Grid from '@mui/material/Grid';
-import Card from '../card/card';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import { getCards } from '../../utils/auth';
-import Map from '../map/Map';
-import Link from 'next/link';
+"use client";
+import React, { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid";
+import Card from "../card/card";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import { getCards } from "../../utils/auth";
+import Map from "../map/Map";
+import Link from "next/link";
+import api from "../../api/axios";
+
+import UserCardModal from "../main_user_cards/card_modal";
+
 const MainComponent = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [cards, setCards] = useState([]);
-  const handleOpen = (card) => {
+  const [googleMeetUrl, setGoogleMeetUrl] = useState("");
+
+  const handleOpen = async (card) => {
     setSelectedCard(card);
+    const link = await fetchMeetLink();
+    setGoogleMeetUrl(link);
     setOpen(true);
   };
+
   useEffect(() => {
     getCards()
       .then((res) => setCards(res))
       .catch((e) => console.log(e));
   }, []);
 
+  const fetchMeetLink = async () => {
+    try {
+      const response = await api.get("/random-meet");
+      console.log(response);
+      return response.data.meetLink;
+    } catch (error) {
+      console.error("Error fetching meet link:", error);
+      return "";
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
   const getChatRoom = async () => {
     try {
-      const res = await api.post(`/cards/${selectedCard.pilgrimID}/assign/${selectedCard.id}`);
+      const res = await api.post(
+        `/cards/${selectedCard.pilgrimID}/assign/${selectedCard.id}`
+      );
       console.log(res);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const normalizeDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   return (
     <Box>
       <div className="flex justify-center items-center">
@@ -42,8 +78,22 @@ const MainComponent = () => {
           className="mt-10 ml-10  w-4/5 flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-5"
         >
           {cards.map((card, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleOpen(card)}>
-              <Card title={card.title} author={card.author} description={card.description}></Card>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={index}
+              onClick={() => {
+                console.log(card);
+                handleOpen(card);
+              }}
+            >
+              <Card
+                title={card.title}
+                author={card.author}
+                description={card.description}
+              ></Card>
             </Grid>
           ))}
         </div>
@@ -64,20 +114,26 @@ const MainComponent = () => {
                 <div className="mt-3 text-center">
                   <h2 className="text-lg font-bold">{selectedCard?.title}</h2>
                   <div className="mt-2 px-7 py-3">
-                    <p className="text-sm text-gray-500">{selectedCard?.description}</p>
+                    <p className="text-sm text-gray-500">
+                      {selectedCard?.description}
+                    </p>
+                    <p>{normalizeDateTime(selectedCard.createdAt)}</p>
                   </div>
                   <div className="flex justify-center items-center">
                     <Map />
                   </div>
-                  <div className=" px-4 py-3">
+                  <div className="px-4 py-3">
                     <Link href="/chat" onClick={getChatRoom}>
                       <button className="px-10 py-2   bg-green-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-700">
                         Take
                       </button>
                     </Link>
+                    <button className="ml-2 bg-gray-500 text-white p-2 rounded-md">
+                      <Link href={googleMeetUrl}>Join Google Meet</Link>
+                    </button>
                     <button
                       onClick={handleClose}
-                      className="px-10 py-2 ml-4  bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-700"
+                      className="px-10 py-2 ml-4 mt-[10px] bg-red-600 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-700"
                     >
                       Close
                     </button>

@@ -14,7 +14,7 @@ const Header = () => {
     <>
       <header className="w-full py-4 px-[40px] flex justify-between items-center bg-white shadow-md lg:py-5 lg:px-[80px]">
         <h1 className="text-xl font-bold">
-          <Link href="/">Hadjaid</Link>
+          <Link href="/">Hajjaid</Link>
         </h1>
         <button className="text-2xl" onClick={toggleMenu}>
           &#9776;
